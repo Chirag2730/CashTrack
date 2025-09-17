@@ -10,7 +10,19 @@ const AddExpenseForm = ({onAddExpense}) => {
       icon: "",
   });
 
+  const [loading, setLoading] = useState(false);
   const handleChange = (key, value) => setExpense({ ...expense, [key]: value });
+
+  const handleAddExpense = async () => {
+    setLoading(true);
+    try {
+      await onAddExpense(expense);
+    } catch (error) {
+      console.error('Error adding expense:', error);
+    } finally {
+      setLoading(false)
+    }
+  };
   return (
     <div>
       <EmojiPickerPopup
@@ -46,9 +58,10 @@ const AddExpenseForm = ({onAddExpense}) => {
         <button
           type="button"
           className="add-btn add-btn-fill"
-          onClick={() => onAddExpense(expense)}
+          onClick={handleAddExpense}
+          disabled={loading}
         >
-          Add Expense
+          {loading ? 'Adding...' : 'Add Expense'}
         </button>
       </div>
     </div>

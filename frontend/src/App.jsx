@@ -12,6 +12,7 @@ import Income from "./pages/Dashboard/Income";
 import Expense from "./pages/Dashboard/Expense";
 import UserProvider from "./context/UserContext";
 import { Toaster } from "react-hot-toast"
+import Recent from "./pages/Dashboard/Recent";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
             <Route path="/dashboard" element={<Home />} />
             <Route path="/income" element={<Income />} />
             <Route path="/expense" element={<Expense />} />
+            <Route path="/recent" element={<Recent />} />
           </Routes>
         </Router>
       </div>

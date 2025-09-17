@@ -30,7 +30,6 @@ const Expenses = () => {
 
     try {
       const response = await axiosInstance.get(
-        // `${API_PATHS.EXPENSE.GET_ALL_EXPENSE}`
         API_PATHS.EXPENSE.GET_ALL_EXPENSE
       );
 
@@ -58,16 +57,24 @@ const Expenses = () => {
       return;
     }
 
+    if(amount>10000000){
+      toast.error("Amount should be less than 1 crore.");
+      return;
+    }
+
     if (!date) {
       toast.error("Date is required.");
       return;
     }
     
     const selectedDate = new Date(date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // reset to start of day
+    const selectedDateCopy = new Date(selectedDate); 
+    selectedDateCopy.setHours(0, 0, 0, 0); 
 
-    if (selectedDate > today) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); 
+
+    if (selectedDateCopy > today) {
       toast.error("Date cannot be later than today.");
       return;
     }

@@ -9,8 +9,19 @@ const AddIncomeForm = ({ onAddIncome }) => {
     date: "",
     icon: "",
   });
-
+  const [loading, setLoading]= useState(false);
   const handleChange = (key, value) => setIncome({ ...income, [key]: value });
+
+  const handleAddIncome = async () => {
+    setLoading(true); 
+    try {
+      await onAddIncome(income); 
+    } catch (error) {
+      console.error('Error adding income:', error);
+    } finally {
+      setLoading(false); 
+    }
+  };
   return (
     <div>
       <EmojiPickerPopup
@@ -46,9 +57,10 @@ const AddIncomeForm = ({ onAddIncome }) => {
         <button
           type="button"
           className="add-btn add-btn-fill"
-          onClick={() => onAddIncome(income)}
+          onClick={handleAddIncome}
+          disabled={loading}
         >
-          Add Income
+          {loading ? 'Adding...' : 'Add Income'}
         </button>
       </div>
     </div>
